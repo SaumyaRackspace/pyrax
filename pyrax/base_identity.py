@@ -652,7 +652,8 @@ class BaseIdentity(object):
                 # Skip service registration of Managed DNS
                 # so it doesn't conflict with Cloud DNS
                 continue
-            setattr(self.services, service.service_type, service)
+            if service.service_type not in self.services:
+                setattr(self.services, service.service_type, service)
             self.regions.update(list(service.endpoints.keys()))
         # Update the 'ALL' services to include all available regions.
         self.regions.discard("ALL")
