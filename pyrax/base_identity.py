@@ -654,6 +654,9 @@ class BaseIdentity(object):
                 continue
             if service.service_type not in self.services:
                 setattr(self.services, service.service_type, service)
+            else:
+                getattr(self.services, service.service_type).endpoints.update(
+                    service.endpoints)
             self.regions.update(list(service.endpoints.keys()))
         # Update the 'ALL' services to include all available regions.
         self.regions.discard("ALL")
